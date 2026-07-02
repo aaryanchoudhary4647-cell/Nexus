@@ -10,7 +10,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "https://nexus-frontend-smoky.vercel.app/",
+        origin: "https://nexus-frontend-smoky.vercel.app",
         methods: ["GET", "POST"],
     }
 })
