@@ -1,0 +1,7 @@
+.remote-cursor::after {
+  content: "";
+  display: inline-block;
+  border-left: 2px solid red;
+  height: 20px;
+  margin-left: -1px;
+}
