@@ -16,7 +16,7 @@ export const CollaborativeProvider = ({ children }) => {
     const [collaborators, setCollaborators] = useState([]);
     const [chatMessages, setChatMessages] = useState([]);
 
-    const randomColor = ()=> {
+    const randomColor = () => {
         return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0');
     }
 
@@ -121,7 +121,9 @@ export const CollaborativeProvider = ({ children }) => {
 
 
     useEffect(() => {
-        socketRef.current = io("https://nexus-backend-u07m.onrender.com");
+        socketRef.current = io("https://nexus-backend-u07m.onrender.com", {
+            transports: ["websocket", "polling"],
+        });;
 
         socketRef.current.on("room-users", (users) => {
             setCollaborators(users);
@@ -164,7 +166,7 @@ export const CollaborativeProvider = ({ children }) => {
             renameCollaboratedFileRef.current({ newName: data.newName, oldPath: data.oldPath })
         })
 
-        socketRef.current.on("cursor-position", ({ userId, path, position,color,username }) => {
+        socketRef.current.on("cursor-position", ({ userId, path, position, color, username }) => {
             setRemoteCursors(prev => ({
                 ...prev,
                 [userId]: {
