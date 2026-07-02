@@ -118,7 +118,7 @@ io.on("connection", (socket) => {
     });
 })
 
-const PORT = "https://nexus-backend-u07m.onrender.com" || 3000
+const PORT = process.env.PORT || 3000
 
 server.listen(PORT, () => {
     console.log("Server started on port 3000")
