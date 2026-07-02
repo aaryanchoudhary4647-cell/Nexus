@@ -121,7 +121,7 @@ export const CollaborativeProvider = ({ children }) => {
 
 
     useEffect(() => {
-        socketRef.current = io("http://localhost:3000");
+        socketRef.current = io("https://nexus-backend-u07m.onrender.com");
 
         socketRef.current.on("room-users", (users) => {
             setCollaborators(users);
