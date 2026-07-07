@@ -34,6 +34,10 @@ export default function EditorArea() {
   }, [activeCollaboratedFile])
 
   const cursorDisposableRef = useRef(null);
+  const activeWorkSpaceRef = useRef(activeWorkSpace);
+  useEffect(() => {
+    activeWorkSpaceRef.current = activeWorkSpace;
+  }, [activeWorkSpace]);
 
 
   const currentFiles =
@@ -100,6 +104,11 @@ export default function EditorArea() {
       cursorDisposableRef.current.dispose();
     }
     cursorDisposableRef.current = editor.onDidChangeCursorPosition((e) => {
+      // Only send cursor positions in collaboration mode
+      if (activeWorkSpaceRef.current !== "collaboration") return;
+      // Skip programmatic cursor changes (e.g. from remote code updates)
+      // reason 1 = ContentFlush, which fires when editor content is replaced externally
+      if (e.reason === 1) return;
       sendCursorPositionRef.current({
         path: activeFileRef.current,
         position: e.position,
